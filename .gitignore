@@ -1,3 +1,15 @@
 .dfx
 .vscode
 target
+
+
+scripts/
+assets/
+keys/
+
+
+.DS_Store
+
+package-lock.json
+package.json
+node_modules/

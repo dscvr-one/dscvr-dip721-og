@@ -274,6 +274,10 @@ type AccountIdentifier = text;
  service {
    // HEALTH-CHECK //
    name: () -> (text) query;
+
+   // BEGIN DSCVR //
+   add_asset: (nat64, vec nat8) -> ();
+   // END DSCVR //
    
    // BEGIN DIP-721 //
    balanceOfDip721: (user: principal) -> (nat64) query;

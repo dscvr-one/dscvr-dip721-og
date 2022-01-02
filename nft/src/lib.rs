@@ -1,3 +1,4 @@
+mod dscvr;
 mod ledger;
 mod ledger_tests;
 mod management;

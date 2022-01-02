@@ -10,7 +10,7 @@ use std::default::Default;
 
 #[derive(CandidType, Clone, Default, Deserialize)]
 pub struct Ledger {
-    tokens: HashMap<TokenIndex, TokenMetadata>,
+    pub tokens: HashMap<TokenIndex, TokenMetadata>,
     user_tokens: HashMap<User, Vec<TokenIndex>>,
 }
 

@@ -1,3 +1,4 @@
+use crate::dscvr::assets;
 use crate::management::is_fleek;
 use crate::management::Fleek;
 use crate::types::*;
@@ -15,7 +16,7 @@ use cap_sdk::IndefiniteEventBuilder;
 /// HEALTH-CHECK ///
 #[query]
 fn name() -> String {
-    String::from("NFT Canister")
+    String::from("DSCVR21")
 }
 
 /// BEGIN DIP-721 ///
@@ -165,7 +166,6 @@ async fn mint_dip721(to: Principal, metadata_desc: MetadataDesc) -> MintReceipt 
         id: tx_id.into(),
     })
 }
-
 /// END DIP-721 ///
 
 #[update]
@@ -288,6 +288,7 @@ fn store_data_in_stable_store() {
         ledger: ledger(),
         token: token_level_metadata(),
         fleek: fleek_db(),
+        asset: assets(),
     };
     ic::stable_store((data,)).expect("failed");
 }
@@ -297,13 +298,23 @@ fn restore_data_from_stable_store() {
     ic::store(data.ledger);
     ic::store(data.token);
     ic::store(data.fleek);
+    ic::store(data.asset);
 }
 
 #[init]
 fn init(owner: Principal, symbol: String, name: String, history: Principal) {
-    ic::store(Fleek(vec![ic::caller()]));
-    *token_level_metadata() = TokenLevelMetadata::new(Some(owner), symbol, name, Some(history));
-    handshake(1_000_000_000_000, Some(history));
+    // ic::store(Fleek(vec![owner]));
+    // *token_level_metadata() = TokenLevelMetadata::new(Some(owner), symbol, name, Some(history));
+    // handshake(1_000_000_000_000, Some(history));
+
+    ic::store(Fleek(vec![owner]));
+    *token_level_metadata() = TokenLevelMetadata::new(
+        Some(owner),
+        symbol,
+        name,
+        Some(Principal::from_text("lj532-6iaaa-aaaah-qcc7a-cai").unwrap()),
+    );
+    handshake(1_000_000_000_000, None);
 }
 
 #[pre_upgrade]
